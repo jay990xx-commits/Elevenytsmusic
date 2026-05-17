@@ -1,5 +1,5 @@
 # ==============================================================================
-# _thumbnails.py - Cinematic Thumbnail Generator (Custom Watermark)
+# _thumbnails.py - Cinematic Thumbnail Generator (Elevenyts Final Black BG)
 # ==============================================================================
 
 import os
@@ -78,16 +78,12 @@ class Thumbnail:
             bg = base.filter(ImageFilter.GaussianBlur(3))
             draw = ImageDraw.Draw(bg)
 
-            # =========================
-            # 🔥 CUSTOM WATERMARK TEXT
-            # =========================
-            left_text = "L ɪ ɢ ʜ ᴛ"
-            right_text = "L"
+            # 
+            left_text = decode_text("L ɪ ɢ ʜ ᴛ")        
+            right_text = decode_text("L")   
 
             colors = [(255, 0, 150), (0, 200, 255), (255, 200, 0)]
 
-            # =========================
-            # TOP LEFT WATERMARK
             # =========================
             lx, ly = 40, 30
             lw = self.watermark_font.getlength(left_text)
@@ -104,14 +100,12 @@ class Thumbnail:
                 draw.text((cx, ly), char, font=self.watermark_font, fill=colors[i % 3])
                 cx += self.watermark_font.getlength(char)
 
-            # =========================
-            # BOTTOM RIGHT WATERMARK
-            # =========================
+            # 
             rw = self.watermark_font.getlength(right_text)
             rh = self.watermark_font.size
 
-            rx = 1280 - rw - 40
-            ry = 720 - rh - 40
+            rx = 1280 - rw - 5
+            ry = 720 - rh - 5
 
             draw.rounded_rectangle(
                 [rx - 20, ry - 10, rx + rw + 20, ry + rh + 10],
@@ -173,7 +167,6 @@ class Thumbnail:
             draw.ellipse([(472, 592), (488, 608)], fill="red")
 
             draw.text((260, 615), "00:00", fill="white", font=self.small_font)
-
             draw.text(
                 (700, 615),
                 getattr(song, 'duration', '00:00'),
